@@ -22,7 +22,12 @@ class Service
         bool $skipAttestation = false,
     ) {
         $publicKey = $this->webauthn->getCreateArgs(
-            $userIdentifier, $name, $displayName, $verificationType, $crossPlatform, $skipAttestation
+            $userIdentifier,
+            $name,
+            $displayName,
+            $verificationType,
+            $crossPlatform,
+            $skipAttestation
         );
 
         return $publicKey;
