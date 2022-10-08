@@ -21,15 +21,14 @@ class Service
         bool $crossPlatform,
         bool $skipAttestation = false,
     ) {
-        $publicKey = $this->webauthn->getCreateArgs(
+        return $this->webauthn->getCreateArgs(
             $userIdentifier,
             $name,
             $displayName,
             $verificationType,
             $crossPlatform,
+            [],
             $skipAttestation
         );
-
-        return $publicKey;
     }
 }

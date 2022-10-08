@@ -12,8 +12,6 @@ class RegisterController
 {
     public function getOptions(Request $request)
     {
-        ray($request->all());
-
         $validated = $request->validate([
             'name' => 'required|string',
             'display_name' => 'required|string',
