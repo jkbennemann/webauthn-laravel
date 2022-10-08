@@ -3,6 +3,7 @@
 namespace Jkbennemann\Webauthn\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Jkbennemann\Webauthn\Enums\UserVerification;
 use Jkbennemann\Webauthn\Exceptions\WebauthnException;
 use Jkbennemann\Webauthn\Service;
@@ -27,11 +28,12 @@ class RegisterController
                 true
             );
 
-            cache()->set(md5($userId.'_challenge'), [
+            ray(Cache::put(md5($userId."_challenge"), [
                 'challenge' => $result->challenge,
                 'name' => $validated['name'],
                 'display_name' => $validated['display_name'],
-            ], 1);
+            ], 10));
+
         } catch (WebauthnException $e) {
             return response()
                 ->setStatusCode(500)
@@ -50,7 +52,7 @@ class RegisterController
         ]);
 
         $userId = 'testabcdefghijklmn';
-        $challengeData = cache()->get(md5($userId.'_challenge'));
+        $challengeData = Cache::get(md5($userId."_challenge"));
 
         ray($challengeData);
 
