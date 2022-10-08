@@ -20,7 +20,7 @@ class RegisterController
         $webauthn = app(Service::class);
         try {
             $result = $webauthn->getCreateArgs(
-                Str::random(16),
+                $userId = "testabcdefghijklmn",
                 $validated['name'],
                 $validated['display_name'],
                 UserVerification::DISCOURAGED,
@@ -28,7 +28,12 @@ class RegisterController
                 true
             );
 
-            cache()->set('challenge', $result->challenge, 1);
+            cache()->set(md5($userId."_challenge"), [
+                'challenge' => $result->challenge,
+                'name' => $validated['name'],
+                'display_name' => $validated['display_name'],
+            ], 1);
+
         } catch (WebauthnException $e) {
             return response()
                 ->setStatusCode(500)
@@ -46,9 +51,10 @@ class RegisterController
             'attestationObject' => 'required|string',
         ]);
 
-        $challenge = cache()->get('challenge');
+        $userId = 'testabcdefghijklmn';
+        $challengeData = cache()->get(md5($userId."_challenge"));
 
-        ray($challenge);
+        ray($challengeData);
 
         $clientData = base64_decode($validated['clientDataJSON']);
         $attestationObject = base64_decode($validated['attestationObject']);
@@ -57,11 +63,18 @@ class RegisterController
         $result = $service->processCreate(
             $clientData,
             $attestationObject,
-            $challenge,
+            $challengeData['challenge'],
             false,
             false,
             false
         );
+
+        $result = array_merge($result, [
+            'name' => $challengeData['name'],
+            'display_name' => $challengeData['display_name'],
+        ]);
+
+        ray($result);
 
         return response()->json(null, 204);
     }
