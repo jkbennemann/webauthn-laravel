@@ -4,6 +4,7 @@ namespace Jkbennemann\Webauthn\Http\Controllers;
 
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Jkbennemann\Webauthn\Enums\UserVerification;
 use Jkbennemann\Webauthn\Exceptions\WebauthnException;
@@ -19,10 +20,13 @@ class RegisterController
             'display_name' => 'required|string',
         ]);
 
+        $user = User::first();
+        $userId = $user ? $user->id : 'testabcdefghijklmn';
+
         $webauthn = app(Service::class);
         try {
             $result = $webauthn->getCreateArgs(
-                $userId = auth()->id() ?: 'testabcdefghijklmn',
+                $userId,
                 $validated['name'],
                 $validated['display_name'],
                 UserVerification::DISCOURAGED,
