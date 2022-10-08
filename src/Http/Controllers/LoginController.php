@@ -8,11 +8,9 @@ class LoginController
 {
     public function getOptions(Request $request)
     {
-
     }
 
     public function login(Request $request)
     {
-
     }
 }

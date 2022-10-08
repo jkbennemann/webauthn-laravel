@@ -40,6 +40,7 @@ class WebauthnServiceProvider extends PackageServiceProvider
 
         $this->app->bind(Webauthn::class, function () {
             $config = $this->app->make(Configuration::class);
+
             return new Webauthn(
                 $config,
                 []
@@ -60,7 +61,7 @@ class WebauthnServiceProvider extends PackageServiceProvider
     {
         if ($this->routesEnabled()) {
             Route::prefix($this->routePrefix())
-                ->group(function() {
+                ->group(function () {
                     Route::get('login', [LoginController::class, 'getOptions'])->name('webauthn.login');
                     Route::post('login', [LoginController::class, 'login'])->name('webauthn.login');
 
@@ -74,7 +75,7 @@ class WebauthnServiceProvider extends PackageServiceProvider
     {
         $prefix = config('webauthn.routes.prefix', 'webauthn');
 
-        if (!is_string($prefix)) {
+        if (! is_string($prefix)) {
             return '';
         }
 

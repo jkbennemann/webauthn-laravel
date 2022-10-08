@@ -21,7 +21,7 @@ class Service
         bool $crossPlatform
     ) {
         $publicKey = $this->webauthn->getCreateArgs(
-            $userIdentifier,$name, $displayName, $verificationType, $crossPlatform
+            $userIdentifier, $name, $displayName, $verificationType, $crossPlatform
         );
 
         return $publicKey;
