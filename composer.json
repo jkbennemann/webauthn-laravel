@@ -1,17 +1,19 @@
 {
-    "name": ":vendor_slug/:package_slug",
-    "description": ":package_description",
+    "name": "jkbennemann/webauthn-laravel",
+    "description": "This is my package webauthn-laravel",
     "keywords": [
-        ":vendor_name",
+        "jkbennemann",
         "laravel",
-        ":package_slug"
+        "php",
+        "webauthn",
+        "webauthn-laravel"
     ],
-    "homepage": "https://github.com/:vendor_slug/:package_slug",
+    "homepage": "https://github.com/jkbennemann/webauthn-laravel",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author@domain.com",
+            "name": "Jakob Bennemann",
+            "email": "github@jakob-bennemann.de",
             "role": "Developer"
         }
     ],
@@ -35,13 +37,13 @@
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src",
-            "VendorName\\Skeleton\\Database\\Factories\\": "database/factories"
+            "Jkbennemann\\Webauthn\\": "src",
+            "Jkbennemann\\Webauthn\\Database\\Factories\\": "database/factories"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests"
+            "Jkbennemann\\Webauthn\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -60,10 +62,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "VendorName\\Skeleton\\SkeletonServiceProvider"
+                "Jkbennemann\\Webauthn\\WebauthnServiceProvider"
             ],
             "aliases": {
-                "Skeleton": "VendorName\\Skeleton\\Facades\\Skeleton"
+                "Webauthn": "Jkbennemann\\Webauthn\\Facades\\Webauthn"
             }
         }
     },
