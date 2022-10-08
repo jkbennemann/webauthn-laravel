@@ -31,4 +31,22 @@ class Service
             $skipAttestation
         );
     }
+
+    public function processCreate(
+        string $clientData,
+        string $attestationObject,
+        $challenge,
+        $requireUserVerification = false,
+        $requireUserPresent = true,
+        $failIfRootMismatch = true
+    ) {
+        return $this->webauthn->processCreate(
+            $clientData,
+            $attestationObject,
+            $challenge,
+            $requireUserVerification,
+            $requireUserPresent,
+            $failIfRootMismatch
+        );
+    }
 }

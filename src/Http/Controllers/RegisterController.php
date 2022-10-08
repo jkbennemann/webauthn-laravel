@@ -27,6 +27,8 @@ class RegisterController
                 null,
                 true
             );
+
+            cache()->set('challenge', $result->challenge, 1);
         } catch (WebauthnException $e) {
             return response()
                 ->setStatusCode(500)
@@ -44,10 +46,22 @@ class RegisterController
             'attestationObject' => 'required|string',
         ]);
 
-        $clientData = base64_decode($validated['clientDataJSON']);
-        $attestationData = base64_decode($validated['attestationObject']);
+        $challenge = cache()->get('challenge');
 
-        //ray($clientData, $attestationData);
+        ray($challenge);
+
+        $clientData = base64_decode($validated['clientDataJSON']);
+        $attestationObject = base64_decode($validated['attestationObject']);
+
+        $service = app(Service::class);
+        $result = $service->processCreate(
+            $clientData,
+            $attestationObject,
+            $challenge,
+            false,
+            false,
+            false
+        );
 
         return response()->json(null, 204);
     }
