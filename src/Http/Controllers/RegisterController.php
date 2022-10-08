@@ -2,6 +2,7 @@
 
 namespace Jkbennemann\Webauthn\Http\Controllers;
 
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Jkbennemann\Webauthn\Enums\UserVerification;
@@ -51,7 +52,9 @@ class RegisterController
             'attestationObject' => 'required|string',
         ]);
 
-        $userId = auth()->id() ?: 'testabcdefghijklmn';
+        $user = User::first();
+
+        $userId = $user ? $user->id : 'testabcdefghijklmn';
         $challengeData = Cache::get(md5($userId.'_challenge'));
 
         ray($challengeData);
@@ -74,7 +77,7 @@ class RegisterController
 
         ray($result);
         WebauthnKey::create([
-            'user_id' => auth()->id(),
+            'user_id' => $userId,
             'credentialId' => $result->credentialId,
             'alias' => $result->displayName,
             'attestationFormat' => $result->attestationFormat,
