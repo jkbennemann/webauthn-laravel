@@ -13,14 +13,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $credentialId
  * @property string $aaguid
  * @property string $attestationFormat
- * @property string certificate
- * @property string certificatePublicKey
- * @property string certificateChain
- * @property string certificateIssuer
- * @property string certificateSubject
- * @property bool rootValid
- * @property bool userPresent
- * @property bool userVerified
+ * @property string $certificate
+ * @property string $credentialPublicKey
+ * @property string $certificateChain
+ * @property string $certificateIssuer
+ * @property string $certificateSubject
+ * @property bool $rootValid
+ * @property bool $userPresent
+ * @property bool $userVerified
  */
 class WebauthnKey extends Model
 {
