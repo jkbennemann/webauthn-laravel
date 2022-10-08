@@ -68,10 +68,8 @@ class RegisterController
             false
         );
 
-        $result = array_merge($result, [
-            'name' => $challengeData['name'],
-            'display_name' => $challengeData['display_name'],
-        ]);
+        $result->name = $challengeData['name'];
+        $result->displayName = $challengeData['display_name'];
 
         ray($result);
 
