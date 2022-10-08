@@ -17,10 +17,17 @@
             "role": "Developer"
         }
     ],
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../../php/webauthn-php"
+        }
+    ],
     "require": {
         "php": "^8.0",
         "spatie/laravel-package-tools": "^1.13.0",
-        "illuminate/contracts": "^9.0"
+        "illuminate/contracts": "^9.0",
+        "jkbennemann/webauthn-php": "dev-main"
     },
     "require-dev": {
         "laravel/pint": "^1.0",

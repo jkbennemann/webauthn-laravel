@@ -6,14 +6,19 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up()
+    public function up(): void
     {
-        Schema::create('webauthn_laravel_table', function (Blueprint $table) {
+        Schema::create('webauthn_keys', function (Blueprint $table) {
             $table->id();
 
-            // add fields
+            $table->string('name');
 
             $table->timestamps();
         });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('webauthn_keys');
     }
 };
