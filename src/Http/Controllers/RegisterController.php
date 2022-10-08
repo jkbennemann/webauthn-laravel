@@ -77,7 +77,7 @@ class RegisterController
             'credentialId' => $result->credentialId,
             'alias' => $result->displayName,
             'attestationFormat' => $result->attestationFormat,
-            'certificatePublicKey' => $result->certificatePublicKey,
+            'credentialPublicKey' => $result->certificatePublicKey,
             'rootValid' => (bool) $result->rootValid,
             'userPresent' => $result->userPresent,
             'userVerified' => $result->userVerified,
