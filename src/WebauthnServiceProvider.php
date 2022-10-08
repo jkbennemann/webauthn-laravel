@@ -62,11 +62,11 @@ class WebauthnServiceProvider extends PackageServiceProvider
         if ($this->routesEnabled()) {
             Route::prefix($this->routePrefix())
                 ->group(function () {
-                    Route::get('login', [LoginController::class, 'getOptions'])->name('webauthn.login');
-                    Route::post('login', [LoginController::class, 'login'])->name('webauthn.login');
+                    Route::get('login', [LoginController::class, 'getOptions'])->name('webauthn.login.get');
+                    Route::post('login', [LoginController::class, 'login'])->name('webauthn.login.post');
 
-                    Route::get('register', [RegisterController::class, 'getOptions'])->name('webauthn.register');
-                    Route::post('register', [RegisterController::class, 'store'])->name('webauthn.register');
+                    Route::get('register', [RegisterController::class, 'getOptions'])->name('webauthn.register.get');
+                    Route::post('register', [RegisterController::class, 'store'])->name('webauthn.register.post');
                 });
         }
     }

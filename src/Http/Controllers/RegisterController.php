@@ -39,6 +39,7 @@ class RegisterController
 
     public function store(Request $request)
     {
+        ray($request->all());
         return response()
             ->setStatusCode(204)
             ->json();
