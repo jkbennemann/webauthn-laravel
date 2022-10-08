@@ -11,8 +11,26 @@ return new class extends Migration
         Schema::create('webauthn_keys', function (Blueprint $table) {
             $table->id();
 
-            $table->string('name');
+            $table->bigInteger('user_id')->unsigned();
 
+            $table->string('alias')->default('key');
+            $table->mediumText('credentialId');
+            $table->text('transports')->default('');
+            $table->string('attestationFormat', 10);
+            $table->text('certificate')->nullable();
+            $table->text('credentialPublicKey');
+            $table->text('certificateChain')->nullable();
+            $table->string('certificateIssuer')->default('');
+            $table->string('certificateSubject')->default('');
+            $table->boolean('rootValid')->default(false);
+            $table->boolean('userPresent')->default(false);
+            $table->boolean('userVerified')->default(false);
+            $table->string('aaguid');
+            $table->integer('signatureCounter')->default(0)->unsigned();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->index('credentialId');
+            $table->index(['user_id', 'alias']);
             $table->timestamps();
         });
     }
