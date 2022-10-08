@@ -39,10 +39,16 @@ class RegisterController
 
     public function store(Request $request)
     {
-        ray($request->all());
+        $validated = $request->validate([
+            'clientDataJSON' => 'required|string',
+            'attestationObject' => 'required|string',
+        ]);
 
-        return response()
-            ->setStatusCode(204)
-            ->json();
+        $clientData = base64_decode($validated['clientDataJSON']);
+        $attestationData = base64_decode($validated['attestationObject']);
+
+        ray($clientData, $attestationData);
+
+        return response()->json(null, 204);
     }
 }
