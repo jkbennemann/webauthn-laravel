@@ -17,12 +17,6 @@
             "role": "Developer"
         }
     ],
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../../php/webauthn-php"
-        }
-    ],
     "require": {
         "php": "^8.0",
         "spatie/laravel-package-tools": "^1.13.0",
