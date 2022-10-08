@@ -28,12 +28,11 @@ class RegisterController
                 true
             );
 
-            ray(Cache::put(md5($userId."_challenge"), [
+            ray(Cache::put(md5($userId.'_challenge'), [
                 'challenge' => $result->challenge,
                 'name' => $validated['name'],
                 'display_name' => $validated['display_name'],
             ], 10));
-
         } catch (WebauthnException $e) {
             return response()
                 ->setStatusCode(500)
@@ -52,7 +51,7 @@ class RegisterController
         ]);
 
         $userId = 'testabcdefghijklmn';
-        $challengeData = Cache::get(md5($userId."_challenge"));
+        $challengeData = Cache::get(md5($userId.'_challenge'));
 
         ray($challengeData);
 
