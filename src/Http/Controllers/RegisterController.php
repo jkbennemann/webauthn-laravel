@@ -47,7 +47,7 @@ class RegisterController
         $clientData = base64_decode($validated['clientDataJSON']);
         $attestationData = base64_decode($validated['attestationObject']);
 
-        ray($clientData, $attestationData);
+        //ray($clientData, $attestationData);
 
         return response()->json(null, 204);
     }
