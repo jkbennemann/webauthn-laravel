@@ -18,7 +18,7 @@ class Service
         $name,
         $displayName,
         $verificationType,
-        bool $crossPlatform,
+        ?bool $crossPlatform,
         bool $skipAttestation = false,
     ) {
         return $this->webauthn->getCreateArgs(

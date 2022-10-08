@@ -24,7 +24,7 @@ class RegisterController
                 $validated['name'],
                 $validated['display_name'],
                 UserVerification::DISCOURAGED,
-                false,
+                null,
                 true
             );
         } catch (WebauthnException $e) {
