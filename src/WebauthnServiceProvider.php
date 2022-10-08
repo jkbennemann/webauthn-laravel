@@ -2,9 +2,9 @@
 
 namespace Jkbennemann\Webauthn;
 
+use Jkbennemann\Webauthn\Commands\WebauthnCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Jkbennemann\Webauthn\Commands\WebauthnCommand;
 
 class WebauthnServiceProvider extends PackageServiceProvider
 {

@@ -3,8 +3,8 @@
 namespace Jkbennemann\Webauthn\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Orchestra\Testbench\TestCase as Orchestra;
 use Jkbennemann\Webauthn\WebauthnServiceProvider;
+use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
 {
