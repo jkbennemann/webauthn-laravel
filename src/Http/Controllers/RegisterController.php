@@ -74,6 +74,7 @@ class RegisterController
 
         ray($result);
         WebauthnKey::create([
+            'user_id' => auth()->id(),
             'credentialId' => $result->credentialId,
             'alias' => $result->displayName,
             'attestationFormat' => $result->attestationFormat,
