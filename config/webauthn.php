@@ -39,6 +39,8 @@ return [
         //add custom domains for testing
     ],
 
+    'model' => App\Models\User::class,
+
     /*
     |--------------------------------------------------------------------------
     | Routes configuration

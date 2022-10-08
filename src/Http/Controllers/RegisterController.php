@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Jkbennemann\Webauthn\Enums\UserVerification;
 use Jkbennemann\Webauthn\Exceptions\WebauthnException;
+use Jkbennemann\Webauthn\Models\WebauthnKey;
 use Jkbennemann\Webauthn\Service;
 
 class RegisterController
@@ -20,7 +21,7 @@ class RegisterController
         $webauthn = app(Service::class);
         try {
             $result = $webauthn->getCreateArgs(
-                $userId = 'testabcdefghijklmn',
+                $userId = auth()->id() ?: 'testabcdefghijklmn',
                 $validated['name'],
                 $validated['display_name'],
                 UserVerification::DISCOURAGED,
@@ -50,7 +51,7 @@ class RegisterController
             'attestationObject' => 'required|string',
         ]);
 
-        $userId = 'testabcdefghijklmn';
+        $userId = auth()->id() ?: 'testabcdefghijklmn';
         $challengeData = Cache::get(md5($userId.'_challenge'));
 
         ray($challengeData);
@@ -72,6 +73,16 @@ class RegisterController
         $result->displayName = $challengeData['display_name'];
 
         ray($result);
+        WebauthnKey::create([
+            'credentialId' => $result->credentialId,
+            'alias' => $result->displayName,
+            'attestationFormat' => $result->attestationFormat,
+            'certificatePublicKey' => $result->certificatePublicKey,
+            'rootValid' => (bool) $result->rootValid,
+            'userPresent' => $result->userPresent,
+            'userVerified' => $result->userVerified,
+            'aaguid' => $result->AAGUID,
+        ]);
 
         return response()->json(null, 204);
     }
