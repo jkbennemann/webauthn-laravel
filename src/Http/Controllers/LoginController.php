@@ -52,7 +52,7 @@ class LoginController
             'clientDataJSON' => 'required|string',
             'attestationObject' => 'required|string',
             'signature' => 'required|string',
-            'userHandle' => 'required|string',
+            'userHandle' => 'sometimes|nullable|string',
             'id' => 'required|string',
         ]);
 
@@ -67,7 +67,10 @@ class LoginController
         $clientData = base64_decode($validated['clientDataJSON']);
         $attestationObject = base64_decode($validated['attestationObject']);
         $signature = base64_decode($validated['signature']);
-        $userHandle = base64_decode($validated['userHandle']);
+        $userHandle = null;
+        if ($validated['userHandle']) {
+            $userHandle = base64_decode($validated['userHandle']);
+        }
         $credentialId = base64_decode($validated['id']);
         $challenge = $challengeData['challenge']->getBinaryString();
         $userVerification = $challengeData['user_verification'];
@@ -81,7 +84,7 @@ class LoginController
             /** @var WebauthnKey $key */
             $key = WebauthnKey::with('user')->where('credentialId', $credentialId)->first();
 
-            if (! $key || ! $key->user->getKey() == (int) $userHandle) {
+            if (! $key || ($userHandle && !$key->user->getKey() == (int) $userHandle)) {
                 throw new WebauthnException('could not verify your key');
             }
 
