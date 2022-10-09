@@ -20,7 +20,8 @@ class RegisterController
         ]);
 
         /** @var User $user */
-        $user = User::first();
+        $userModel = config('webauthn.model');
+        $user = $userModel::query()->with('keys')->first();
         $userId = $user ? $user->getAuthIdentifier() : '1';
 
         $webauthn = app(Service::class);
@@ -33,19 +34,15 @@ class RegisterController
                 null,
                 true
             );
-
-            ray($result);
-
-            ray(Cache::put(md5($userId.'_challenge'), [
+            Cache::put(md5($userId.'_challenge'), [
                 'challenge' => $result->challenge,
                 'name' => $validated['name'],
                 'user_verification' => $result->authenticatorSelection->userVerification,
                 'display_name' => $validated['display_name'],
-            ], 10));
+            ], 60 * 3);
         } catch (WebauthnException $e) {
             return response()
-                ->setStatusCode(500)
-                ->json($e->getMessage());
+                ->json($e->getMessage(), 500);
         }
 
         return response()
@@ -60,12 +57,11 @@ class RegisterController
         ]);
 
         /** @var User $user */
-        $user = User::first();
+        $userModel = config('webauthn.model');
+        $user = $userModel::query()->with('keys')->first();
         $userId = $user ? $user->getAuthIdentifier() : '1';
 
         $challengeData = Cache::get(md5($userId.'_challenge'));
-
-        ray($challengeData);
 
         $clientData = base64_decode($validated['clientDataJSON']);
         $attestationObject = base64_decode($validated['attestationObject']);
@@ -82,8 +78,6 @@ class RegisterController
 
         $result->name = $challengeData['name'];
         $result->displayName = $challengeData['display_name'];
-
-        ray($result);
 
         WebauthnKey::create([
             'user_id' => $userId,

@@ -35,7 +35,7 @@ class LoginController
             Cache::put(md5($userId.'_login_challenge'), [
                 'challenge' => $result->challenge,
                 'user_verification' => null,
-            ], 10);
+            ], 60 * 3);
 
             ray($result);
         } catch (WebauthnException $e) {
