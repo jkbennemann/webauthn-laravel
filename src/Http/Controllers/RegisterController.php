@@ -36,7 +36,7 @@ class RegisterController
             );
             Cache::put(md5($userId.'_challenge'), [
                 'challenge' => $result->challenge,
-                'name' => $validated['name'],
+                'name' => $user->name,
                 'user_verification' => $result->authenticatorSelection->userVerification,
                 'display_name' => $validated['display_name'],
             ], 60 * 3);
