@@ -97,9 +97,9 @@ class LoginController
 
             return response()->json();
         } catch (WebauthnException $e) {
+            ray($e);
             return response()
-                ->setStatusCode(500)
-                ->json($e->getMessage());
+                ->json($e->getMessage(), 500);
         }
     }
 }
