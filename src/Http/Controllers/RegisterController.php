@@ -71,7 +71,7 @@ class RegisterController
         $result = $service->processCreate(
             $clientData,
             $attestationObject,
-            $challengeData['challenge'],
+            $challengeData['challenge']->getBinaryString(),
             $challengeData['user_verification'] === UserVerification::REQUIRED,
             true,
             false
