@@ -48,10 +48,10 @@ class Service
     public function processCreate(
         string $clientData,
         string $attestationObject,
-        $challenge,
-        $requireUserVerification = false,
-        $requireUserPresent = true,
-        $failIfRootMismatch = true
+               $challenge,
+               $requireUserVerification = false,
+               $requireUserPresent = true,
+               $failIfRootMismatch = true
     ) {
         return $this->webauthn->processCreate(
             $clientData,
@@ -60,6 +60,31 @@ class Service
             $requireUserVerification,
             $requireUserPresent,
             $failIfRootMismatch
+        );
+    }
+
+    /**
+     * @throws WebauthnException
+     */
+    public function processVerify(
+        string $clientData,
+        string $attestationObject,
+        string $signature,
+        string $credentialPublicKey,
+        string $challenge,
+        ?int $prevSignatureCnt = null,
+        bool $requireUserVerification = false,
+        bool $requireUserPresent = true,
+    ): bool {
+        return $this->webauthn->processGet(
+            $clientData,
+            $attestationObject,
+            $signature,
+            $credentialPublicKey,
+            $challenge,
+            $prevSignatureCnt,
+            $requireUserVerification,
+            $requireUserPresent
         );
     }
 }
