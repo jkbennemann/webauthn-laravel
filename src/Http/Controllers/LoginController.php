@@ -96,7 +96,7 @@ class LoginController
 
             return response()->json([
                 'key' => $key->alias,
-
+                'last_login' => $key->lastLogin->getTimestamp(),
             ]);
         } catch (WebauthnException $e) {
             ray($e);
