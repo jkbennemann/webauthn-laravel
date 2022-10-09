@@ -36,7 +36,6 @@ class LoginController
                 'challenge' => $result->challenge,
                 'user_verification' => null,
             ], 60 * 3);
-
         } catch (WebauthnException $e) {
             return response()
                 ->setStatusCode(500)
@@ -98,7 +97,6 @@ class LoginController
                 'last_login' => $key->lastLogin->getTimestamp(),
             ]);
         } catch (WebauthnException $e) {
-
             return response()
                 ->json($e->getMessage(), 500);
         }
