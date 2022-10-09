@@ -71,7 +71,7 @@ class LoginController
         $signature = base64_decode($validated['signature']);
         $userHandle = base64_decode($validated['userHandle']);
         $credentialId = base64_decode($validated['id']);
-        $challenge = $challengeData['challenge'];
+        $challenge = $challengeData['challenge']->getBinaryString();
         $userVerification = $challengeData['user_verification'];
         $credentialPublicKey = null;
 
