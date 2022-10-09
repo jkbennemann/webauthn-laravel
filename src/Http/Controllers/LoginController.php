@@ -88,7 +88,7 @@ class LoginController
             }
 
             $service->processVerify(
-                $clientData, $attestationObject, $signature, $key->credentialPublicKey, $challenge, $key->signatureCounter, $userVerification === 'required'
+                $clientData, $attestationObject, $signature, $key->credentialPublicKey, $challenge, null, $userVerification === 'required'
             );
 
             //log user in
