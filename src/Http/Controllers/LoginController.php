@@ -64,6 +64,7 @@ class LoginController
         $userId = $user ? $user->getAuthIdentifier() : '1';
 
         $challengeData = Cache::get(md5($userId.'_login_challenge'));
+        Cache::forget(md5($userId.'_login_challenge'));
         ray('user', $user, $user?->getAuthIdentifier());
         ray('challenge', $challengeData);
         $clientData = base64_decode($validated['clientDataJSON']);
