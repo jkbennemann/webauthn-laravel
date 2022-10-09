@@ -12,7 +12,8 @@ class LoginController
 {
     public function getOptions(Request $request)
     {
-        $user = User::first();
+        $user = User::with('keys')->first();
+        ray($user);
         $keys = $user ? $user->keys : [];
 
         $webauthn = app(Service::class);
