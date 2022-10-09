@@ -4,6 +4,7 @@ namespace Jkbennemann\Webauthn\Http\Controllers;
 
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Jkbennemann\Webauthn\Enums\UserVerification;
 use Jkbennemann\Webauthn\Exceptions\WebauthnException;
@@ -92,7 +93,8 @@ class LoginController
                 $clientData, $attestationObject, $signature, $key->credentialPublicKey, $challenge, null, $userVerification === 'required'
             );
 
-            //log user in
+            Auth::login($key->user);
+
             $key->trackLogin();
 
             return response()->json([
