@@ -14,7 +14,6 @@ class LoginController
 {
     public function getOptions(Request $request)
     {
-
         /** @var User $user */
         $userModel = config('webauthn.model');
         $user = $userModel::with('keys')::get()->first();
@@ -80,7 +79,7 @@ class LoginController
         $credentialId = bin2hex($credentialId);
         $userHandle = bin2hex($userHandle);
 
-        ray("data", $credentialId, $userHandle);
+        ray('data', $credentialId, $userHandle);
 
         $service = app(Service::class);
 
@@ -97,6 +96,5 @@ class LoginController
                 ->setStatusCode(500)
                 ->json($e->getMessage());
         }
-
     }
 }
