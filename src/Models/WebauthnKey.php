@@ -5,6 +5,7 @@ namespace Jkbennemann\Webauthn\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
@@ -21,6 +22,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property bool $rootValid
  * @property bool $userPresent
  * @property bool $userVerified
+ * @property Carbon $lastLogin
  */
 class WebauthnKey extends Model
 {
@@ -30,8 +32,20 @@ class WebauthnKey extends Model
 
     protected $guarded = [];
 
+    protected $dates = [
+        'lastLogin'
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(config('webauthn.model'));
+    }
+
+    public function trackLogin(): void
+    {
+        $this->signatureCounter++;
+        $this->lastLogin = now();
+
+        $this->save();
     }
 }

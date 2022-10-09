@@ -88,12 +88,16 @@ class LoginController
             }
 
             $service->processVerify(
-                $clientData, $attestationObject, $signature, $key->credentialPublicKey, $challenge, null, $userVerification === 'required'
+                $clientData, $attestationObject, $signature, $key->credentialPublicKey, $challenge, $key->signatureCounter, $userVerification === 'required'
             );
 
             //log user in
+            $key->trackLogin();
 
-            return response()->json();
+            return response()->json([
+                'key' => $key->alias,
+
+            ]);
         } catch (WebauthnException $e) {
             ray($e);
 
