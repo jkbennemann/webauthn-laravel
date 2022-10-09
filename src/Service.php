@@ -38,12 +38,10 @@ class Service
     public function getVerificationArgs(
         $verificationType,
         array $existingCredentialIds = [],
-        int $timeout = 60,
     ): PublicKey {
         return $this->webauthn->getVerifyArgs(
             $verificationType,
-            $existingCredentialIds,
-            $timeout
+            $existingCredentialIds
         );
     }
 
