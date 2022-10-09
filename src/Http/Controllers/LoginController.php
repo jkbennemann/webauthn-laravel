@@ -6,6 +6,7 @@ use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 use Jkbennemann\Webauthn\Enums\UserVerification;
 use Jkbennemann\Webauthn\Exceptions\WebauthnException;
+use Jkbennemann\Webauthn\Models\WebauthnKey;
 use Jkbennemann\Webauthn\Service;
 
 class LoginController
@@ -14,8 +15,12 @@ class LoginController
     {
         $userModel = config('webauthn.model');
         $user = $userModel::with('keys')->first();
-        ray($user);
-        $keys = $user ? $user->keys : [];
+        $keys = [];
+
+        /** @var WebauthnKey $key */
+        foreach ($user ? $user->keys : [] as $key) {
+            $keys[] = $key->credentialId;
+        }
 
         $webauthn = app(Service::class);
         try {
