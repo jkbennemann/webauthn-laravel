@@ -34,7 +34,7 @@ class LoginController
 
             Cache::put(md5($userId.'_login_challenge'), [
                 'challenge' => $result->challenge,
-                'user_verification' => $result->authenticatorSelection->userVerification,
+                'user_verification' => null,
             ], 10);
 
             ray($result);
