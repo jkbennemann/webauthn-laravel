@@ -2,7 +2,6 @@
 
 namespace Jkbennemann\Webauthn\Http\Controllers;
 
-use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 use Jkbennemann\Webauthn\Enums\UserVerification;
 use Jkbennemann\Webauthn\Exceptions\WebauthnException;
