@@ -15,7 +15,7 @@ class RegisterController
     public function getOptions(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string',
+            //'name' => 'required|string',
             'display_name' => 'required|string',
         ]);
 
@@ -28,7 +28,7 @@ class RegisterController
         try {
             $result = $webauthn->getCreateArgs(
                 $userId,
-                $validated['name'],
+                $user->name,
                 $validated['display_name'],
                 UserVerification::DISCOURAGED,
                 null,
