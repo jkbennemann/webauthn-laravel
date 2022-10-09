@@ -39,7 +39,7 @@ class RegisterController
             ray(Cache::put(md5($userId.'_challenge'), [
                 'challenge' => $result->challenge,
                 'name' => $validated['name'],
-                'attestation' => $result->authenticatorSelection->userVerification,
+                'user_verification' => $result->authenticatorSelection->userVerification,
                 'display_name' => $validated['display_name'],
             ], 10));
         } catch (WebauthnException $e) {
@@ -75,7 +75,7 @@ class RegisterController
             $clientData,
             $attestationObject,
             $challengeData['challenge'],
-            $challengeData['attestation'] === UserVerification::REQUIRED,
+            $challengeData['user_verification'] === UserVerification::REQUIRED,
             true,
             false
         );
