@@ -43,7 +43,6 @@ class WebauthnKey extends Model
 
     public function trackLogin(): void
     {
-        $this->signatureCounter++;
         $this->lastLogin = now();
 
         $this->save();
