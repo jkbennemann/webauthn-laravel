@@ -84,7 +84,7 @@ class LoginController
             /** @var WebauthnKey $key */
             $key = WebauthnKey::with('user')->where('credentialId', $credentialId)->first();
 
-            if (! $key || ($userHandle && !$key->user->getKey() == (int) $userHandle)) {
+            if (! $key || ($userHandle && ! $key->user->getKey() == (int) $userHandle)) {
                 throw new WebauthnException('could not verify your key');
             }
 
