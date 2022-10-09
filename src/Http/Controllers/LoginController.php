@@ -81,15 +81,14 @@ class LoginController
 
         $credentialId = bin2hex($credentialId);
 
-
         $service = app(Service::class);
 
         try {
             /** @var WebauthnKey $key */
             $key = WebauthnKey::with('user')->where('credentialId', $credentialId)->first();
 
-            if (!$key || !$key->user->getKey() == (int)$userHandle) {
-                throw new WebauthnException("could not verify your key");
+            if (! $key || ! $key->user->getKey() == (int) $userHandle) {
+                throw new WebauthnException('could not verify your key');
             }
 
             $service->processVerify(
