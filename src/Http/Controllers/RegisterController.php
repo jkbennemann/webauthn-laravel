@@ -19,8 +19,9 @@ class RegisterController
             'display_name' => 'required|string',
         ]);
 
+        /** @var User $user */
         $user = User::first();
-        $userId = $user ? $user->id : 'testabcdefghijklmn';
+        $userId = $user ? $user->getAuthIdentifier() : '1';
 
         $webauthn = app(Service::class);
         try {
@@ -32,6 +33,8 @@ class RegisterController
                 null,
                 true
             );
+
+            ray($result);
 
             ray(Cache::put(md5($userId.'_challenge'), [
                 'challenge' => $result->challenge,
@@ -55,9 +58,10 @@ class RegisterController
             'attestationObject' => 'required|string',
         ]);
 
+        /** @var User $user */
         $user = User::first();
+        $userId = $user ? $user->getAuthIdentifier() : '1';
 
-        $userId = $user ? $user->id : 'testabcdefghijklmn';
         $challengeData = Cache::get(md5($userId.'_challenge'));
 
         ray($challengeData);
@@ -71,7 +75,7 @@ class RegisterController
             $attestationObject,
             $challengeData['challenge'],
             false,
-            false,
+            true,
             false
         );
 
