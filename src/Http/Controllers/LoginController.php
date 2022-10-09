@@ -98,6 +98,7 @@ class LoginController
             return response()->json();
         } catch (WebauthnException $e) {
             ray($e);
+
             return response()
                 ->json($e->getMessage(), 500);
         }
