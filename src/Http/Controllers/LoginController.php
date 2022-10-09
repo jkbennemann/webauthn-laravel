@@ -88,8 +88,6 @@ class LoginController
                 throw new WebauthnException('could not verify your key');
             }
 
-            ray($key->credentialPublicKey);
-
             $service->processVerify(
                 $clientData, $attestationObject, $signature, $key->credentialPublicKey, $challenge, null, $userVerification === 'required'
             );
