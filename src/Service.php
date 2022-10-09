@@ -15,12 +15,12 @@ class Service
      */
     public function getCreateArgs(
         string $userIdentifier,
-        $name,
-        $displayName,
-        $verificationType,
+               $name,
+               $displayName,
+               $verificationType,
         ?bool $crossPlatform,
         bool $skipAttestation = false,
-    ) {
+    ): PublicKey {
         return $this->webauthn->getCreateArgs(
             $userIdentifier,
             $name,
@@ -29,6 +29,21 @@ class Service
             $crossPlatform,
             [],
             $skipAttestation
+        );
+    }
+
+    /**
+     * @throws WebauthnException
+     */
+    public function getVerificationArgs(
+        $verificationType,
+        array $existingCredentialIds = [],
+        int $timeout = 60,
+    ): PublicKey {
+        return $this->webauthn->getVerifyArgs(
+            $verificationType,
+            $existingCredentialIds,
+            $timeout
         );
     }
 

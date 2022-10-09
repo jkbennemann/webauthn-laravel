@@ -34,7 +34,8 @@ class WebauthnServiceProvider extends PackageServiceProvider
                 config('webauthn.relying_party.id'),
                 config('webauthn.challenge.length', 32),
                 config('webauthn.challenge.timeout', 5),
-                $this->whitelistedOrigins()
+                $this->whitelistedOrigins(),
+                //add configuration for custom transports
             );
         });
 
