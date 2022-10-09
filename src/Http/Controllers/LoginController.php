@@ -79,18 +79,18 @@ class LoginController
         //get associated user and publicKey
 
         $credentialId = bin2hex($credentialId);
-        $userHandle = bin2hex($userHandle);
 
-        /** @var WebauthnKey $key */
-        $key = WebauthnKey::with('user')->where('credentialId', $credentialId)->first();
-
-        ray($key, $key->user);
-
-        ray('data', $credentialId, $userHandle);
 
         $service = app(Service::class);
 
         try {
+            /** @var WebauthnKey $key */
+            $key = WebauthnKey::with('user')->where('credentialId', $credentialId)->first();
+
+            if (!$key || !$key->user->getKey() == (int)$userHandle) {
+                throw new WebauthnException("could not verify your key");
+            }
+
             $service->processVerify(
                 $clientData, $attestationObject, $signature, $key->credentialPublicKey, $challenge, null, $userVerification === 'required'
             );
