@@ -81,12 +81,12 @@ class LoginController
             /** @var WebauthnKey $key */
             $key = WebauthnKey::with('user')->where('credentialId', $credentialId)->first();
 
-            if (! $key || ! $key->user->getKey() == (int) $userHandle) {
+            if (! $key) {
                 throw new WebauthnException('could not verify your key');
             }
 
             $service->processVerify(
-                $clientData, $attestationObject, $signature, $key->credentialPublicKey, $challenge, null, $userVerification === 'required'
+                $clientData, $attestationObject, $signature, hex2bin($key->credentialPublicKey), $challenge, null, $userVerification === 'required'
             );
 
             //log user in
