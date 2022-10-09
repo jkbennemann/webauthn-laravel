@@ -62,6 +62,7 @@ class RegisterController
         $userId = $user ? $user->getAuthIdentifier() : '1';
 
         $challengeData = Cache::get(md5($userId.'_challenge'));
+        Cache::forget(md5($userId.'_challenge'));
 
         $clientData = base64_decode($validated['clientDataJSON']);
         $attestationObject = base64_decode($validated['attestationObject']);

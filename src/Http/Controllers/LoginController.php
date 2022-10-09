@@ -65,8 +65,7 @@ class LoginController
 
         $challengeData = Cache::get(md5($userId.'_login_challenge'));
         Cache::forget(md5($userId.'_login_challenge'));
-        ray('user', $user, $user?->getAuthIdentifier());
-        ray('challenge', $challengeData);
+
         $clientData = base64_decode($validated['clientDataJSON']);
         $attestationObject = base64_decode($validated['attestationObject']);
         $signature = base64_decode($validated['signature']);
@@ -74,16 +73,13 @@ class LoginController
         $credentialId = base64_decode($validated['id']);
         $challenge = $challengeData['challenge']->getBinaryString();
         $userVerification = $challengeData['user_verification'];
-        $credentialPublicKey = null;
-
-        //find key where credentialId matches $credentialId
-        //get associated user and publicKey
-
         $credentialId = bin2hex($credentialId);
 
         $service = app(Service::class);
 
         try {
+            //find key where credentialId matches $credentialId
+            //get associated user and publicKey
             /** @var WebauthnKey $key */
             $key = WebauthnKey::with('user')->where('credentialId', $credentialId)->first();
 
