@@ -17,7 +17,7 @@ class LoginController
 
         /** @var User $user */
         $userModel = config('webauthn.model');
-        $user = $userModel::with('keys')::first();
+        $user = $userModel::with('keys')::get()->first();
         $userId = $user ? $user->getAuthIdentifier() : '1';
         $keys = [];
 
@@ -59,8 +59,9 @@ class LoginController
             'id' => 'required|string',
         ]);
 
+        $userModel = config('webauthn.model');
         /** @var User $user */
-        $user = User::first();
+        $user = $userModel::with('keys')::get()->first();
         $userId = $user ? $user->getAuthIdentifier() : '1';
 
         $challengeData = Cache::get(md5($userId.'_login_challenge'));
