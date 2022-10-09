@@ -79,13 +79,18 @@ class LoginController
         $credentialId = bin2hex($credentialId);
         $userHandle = bin2hex($userHandle);
 
+        /** @var WebauthnKey $key */
+        $key = WebauthnKey::with('user')->where('credentialId', $credentialId)->first();
+
+        ray($key, $key->user);
+
         ray('data', $credentialId, $userHandle);
 
         $service = app(Service::class);
 
         try {
             $service->processVerify(
-                $clientData, $attestationObject, $signature, $credentialPublicKey, $challenge, null, $userVerification === 'required'
+                $clientData, $attestationObject, $signature, $key->credentialPublicKey, $challenge, null, $userVerification === 'required'
             );
 
             //log user in
