@@ -33,7 +33,7 @@ class WebauthnKey extends Model
     protected $guarded = [];
 
     protected $dates = [
-        'lastLogin'
+        'lastLogin',
     ];
 
     public function user(): BelongsTo
